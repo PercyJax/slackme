@@ -116,12 +116,13 @@ class SlackEvent {
             $this->event_type = "command";
             $this->command = $_POST["command"];
             $this->response_url = $_POST["response_url"];
-        } else if (isset($_POST["bot_id"])) {
-            $this->event_type = "bot";
-            $this->bot_id = $_POST["bot_id"];
-            $this->bot_name = $_POST["bot_name"];
         } else if (isset($_POST["timestamp"])) {
             $this->event_type = "message";
+            if (isset($_POST["bot_id"])) {
+                $this->event_type = "bot";
+                $this->bot_id = $_POST["bot_id"];
+                $this->bot_name = $_POST["bot_name"];
+            }
             $this->timestamp = $_POST["timestamp"];
             $this->trigger_word = $_POST["trigger_word"];
         } else {
