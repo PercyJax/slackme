@@ -19,9 +19,9 @@ function logger($text) {
     return $text;
 }
 
-function isFromSlack() {
-    return isset($_POST["token"]) && $_POST["token"] == $VERIFICATION_TOKEN;
-}
+// function isFromSlack() {
+//     return isset($_POST["token"]) && $_POST["token"] == $VERIFICATION_TOKEN;
+// }
 
 function sendPostJson($url, $post_fields_json_str) {
     $curl = curl_init($url);
@@ -76,19 +76,36 @@ class SlackEvent {
         return logger($token === $this->token);
     }
 
+    public function isBot($bot_id = null) {
+        if (is_null($bot_id)) {
+            return $this->event_type === "bot";
+        } else {
+            return $this->bot_id === $bot_id;
+        }
+    }
+
+    // Common to all
     private $event_type;
     private $token;
     private $team_id;
     private $team_domain;
     private $channel_id;
     private $channel_name;
-    private $timestamp;
     private $user_id;
     private $user_name;
-    private $command;
     private $text;
+
+    // Messages
+    private $timestamp;
     private $trigger_word;
+
+    // Commands
+    private $command;
     private $response_url;
+
+    // Bots
+    private $bot_id;
+    private $bot_name;
 
     // Auto-detect
     public function __construct() {
@@ -99,10 +116,14 @@ class SlackEvent {
             $this->event_type = "command";
             $this->command = $_POST["command"];
             $this->response_url = $_POST["response_url"];
+        } else if (isset($_POST["bot_id"])) {
+            $this->event_type = "bot";
+            $this->bot_id = $_POST["bot_id"];
+            $this->bot_name = $_POST["bot_name"];
         } else if (isset($_POST["timestamp"])) {
             $this->event_type = "message";
-            $this->timestamp = $timestamp;
-            $this->trigger_word = $trigger_word;
+            $this->timestamp = $_POST["timestamp"];
+            $this->trigger_word = $_POST["trigger_word"];
         } else {
             return null;
         }
@@ -148,20 +169,28 @@ class SlackEvent {
     // }
 
 
-
+    // Common to all
     public function getEventType() {return $this->event_type;}
     public function getToken() {return $this->token;}
     public function getTeamID() {return $this->team_id;}
     public function getTeamDomain() {return $this->team_domain;}
     public function getChannelID() {return $this->channel_id;}
     public function getChannelName() {return $this->channel_name;}
-    public function getTimeStamp() {return $this->timestamp;}
     public function getUserID() {return $this->user_id;}
     public function getUserName() {return $this->user_name;}
-    public function getCommand() {return $this->command;}
     public function getText() {return $this->text;}
+
+    // Messages
+    public function getTimeStamp() {return $this->timestamp;}
     public function getTriggerWord() {return $this->trigger_word;}
+
+    // Commands
+    public function getCommand() {return $this->command;}
     public function getResponseURL() {return $this->response_url;}
+
+    // Bots
+    public function getBotID() {return $this->bot_id;}
+    public function getBotName() {return $this->bot_name;}
 
     public function respond($response_string, $in_channel = false, $attachments = array()) {
         if ($this->event_type == 'command') {
