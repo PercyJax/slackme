@@ -4,15 +4,15 @@
 require_once $LIBRARY_DIR.'/array_column.php';
 
 class SlackUsers {
-    public static function list() {
+    public static function getList() {
         return callSlackAPI('users.list');
     }
-    public static function info($id) {
+    public static function getInfo($id) {
         $input['user'] = $id;
         return callSlackAPI('users.info', $input);
     }
     public static function getField($id, $field) {
-        return self::info($id)->"$field";
+        return self::getInfo($id)->"$field";
     }
     public static function getName($id) {
         return self::getField($id, 'real_name');
