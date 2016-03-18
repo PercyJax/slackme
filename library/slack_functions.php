@@ -164,7 +164,7 @@ class SlackEvent {
 
     public function respond($response_string, $in_channel = false, $attachments = array()) {
         if ($this->event_type == 'command') {
-            echo json_encode(array('text' => $response_string, 'response_type' => ($in_channel ? 'in_channel' : 'ephemeral'), 'attachments' => $attachments));
+            sendPostJson($this->getResponseURL(), json_encode(array('text' => $response_string, 'response_type' => ($in_channel ? 'in_channel' : 'ephemeral'), 'attachments' => $attachments)));
         } elseif ($this->event_type == 'message') {
             echo json_encode(array('text' => $response_string, 'attachments' => $attachments));
         }
