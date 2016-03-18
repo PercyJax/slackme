@@ -23,6 +23,16 @@ function isFromSlack() {
     return isset($_POST["token"]) && $_POST["token"] == $VERIFICATION_TOKEN;
 }
 
+function sendPostJson($url, $post_fields_json_str) {
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, logger($post_fields_json_str));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+    logger(json_decode($result = logger(curl_exec($curl))));
+    curl_close($curl);
+    return $result;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Incoming Slack Commands
@@ -257,14 +267,14 @@ class SlackMessage implements JsonSerializable {
     }
 
     public function send() {
-        logger(json_encode($this->contents));
         global $SLACKBOT_URL;
-        $curl = curl_init($SLACKBOT_URL);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->contents));
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
-        logger(json_decode(logger(curl_exec($curl))));
-        curl_close($curl);
+        sendPostJson($SLACKBOT_URL, logger(json_encode($this->contents)));
+    //     $curl = curl_init($SLACKBOT_URL);
+    //     curl_setopt($curl, CURLOPT_POST, true);
+    //     curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->contents));
+    //     curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+    //     logger(json_decode(logger(curl_exec($curl))));
+    //     curl_close($curl);
     }
 }
 
