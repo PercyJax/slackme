@@ -155,10 +155,10 @@ class SlackEvent {
     public function getChannelID() {return $this->channel_id;}
     public function getChannelName() {return $this->channel_name;}
     public function getTimeStamp() {return $this->timestamp;}
-    public function getUserID() {return $this->user_name;}
+    public function getUserID() {return $this->user_id;}
+    public function getUserName() {return $this->user_name;}
     public function getCommand() {return $this->command;}
     public function getText() {return $this->text;}
-    public function getChannelName() {return $this->channel_name;}
     public function getTriggerWord() {return $this->trigger_word;}
     public function getResponseURL() {return $this->response_url;}
 
