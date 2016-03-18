@@ -258,7 +258,7 @@ class SlackMessage implements JsonSerializable {
     public function getAttachments() {return $this->attachments;}
 
     public function &newAttachment() {
-        $this->attachments[] = new SlackMessageAttachment();
+        $this->attachments[] = new SlackAttachment();
         return $this->attachments[count($this->attachments) - 1];
     }
 
@@ -280,7 +280,7 @@ class SlackMessage implements JsonSerializable {
 
 // Attachment class for Slack Messages
 
-class SlackMessageAttachment implements JsonSerializable {
+class SlackAttachment implements JsonSerializable {
     public function jsonSerialize() {
         return $this->contents;
     }
