@@ -72,7 +72,7 @@ class SlackEvent {
         if (is_null($token)) {
             $token = $GLOBALS['VERIFICATION_TOKEN'];
         }
-        return $token === $this->token;
+        return logger($token === $this->token);
     }
 
     private $event_type;
