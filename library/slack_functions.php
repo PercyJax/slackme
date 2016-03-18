@@ -54,6 +54,14 @@ function isFromSlack() {
 ////////////////////////////////////////////////////////////////////////////////
 
 class SlackEvent {
+    public function isValid() {
+        global $VERIFICATION_TOKEN;
+        return $VERIFICATION_TOKEN === $this->token;
+    }
+    public function isValid($token) {
+        return $token === $this->token;
+    }
+
     private $event_type;
     private $token;
     private $team_id;
@@ -68,36 +76,64 @@ class SlackEvent {
     private $trigger_word;
     private $response_url;
 
-    // Slash Command
-    public function __construct($token, $team_id, $team_domain, $channel_id, $channel_name, $user_id, $user_name, $command, $text, $response_url) {
-        $this->token = $token;
-        $this->team_id = $team_id;
-        $this->team_domain = $team_domain;
-        $this->channel_id = $channel_id;
-        $this->channel_name = $channel_name;
-        $this->user_id = $user_id;
-        $this->user_name = $user_name;
-        $this->command = $command;
-        $this->text = $text;
-        $this->response_url = $response_url;
-        $this->event_type = "command";
+    // Auto-detect
+    public function __construct() {
+        if (!isset($_POST)) {
+            return false;
+        }
+        if (isset($_POST["command"])) {
+            $this->event_type = "command";
+            $this->command = $_POST["command"];
+            $this->response_url = $_POST["response_url"];
+        } else if (isset($_POST["timestamp"])) {
+            $this->event_type = "message";
+            $this->timestamp = $timestamp;
+            $this->trigger_word = $trigger_word;
+        } else {
+            return null;
+        }
+        $this->token = $_POST["token"];
+        $this->team_id = $_POST["team_id"];
+        $this->team_domain = $_POST["team_domain"];
+        $this->channel_id = $_POST["channel_id"];
+        $this->channel_name = $_POST["channel_name"];
+        $this->user_id = $_POST["user_id"];
+        $this->user_name = $_POST["user_name"];
+        $this->text = $_POST["text"];
+        
     }
 
-    // Message
-    public function __construct($token, $team_id, $team_domain, $channel_id, $channel_name, $timestamp, $user_id, $user_name, $command, $text, $trigger_word) {
-        $this->token = $token;
-        $this->team_id = $team_id;
-        $this->team_domain = $team_domain;
-        $this->channel_id = $channel_id;
-        $this->channel_name = $channel_name;
-        $this->timestamp = $timestamp;
-        $this->user_id = $user_id;
-        $this->user_name = $user_name;
-        $this->command = $command;
-        $this->text = $text;
-        $this->trigger_word = $trigger_word;
-        $this->event_type = "message";
-    }
+    // // Slash Command
+    // public function __construct($token, $team_id, $team_domain, $channel_id, $channel_name, $user_id, $user_name, $command, $text, $response_url) {
+    //     $this->token = $token;
+    //     $this->team_id = $team_id;
+    //     $this->team_domain = $team_domain;
+    //     $this->channel_id = $channel_id;
+    //     $this->channel_name = $channel_name;
+    //     $this->user_id = $user_id;
+    //     $this->user_name = $user_name;
+    //     $this->command = $command;
+    //     $this->text = $text;
+    //     $this->response_url = $response_url;
+    //     $this->event_type = "command";
+    // }
+
+    // // Message
+    // public function __construct($token, $team_id, $team_domain, $channel_id, $channel_name, $timestamp, $user_id, $user_name, $text, $trigger_word) {
+    //     $this->token = $token;
+    //     $this->team_id = $team_id;
+    //     $this->team_domain = $team_domain;
+    //     $this->channel_id = $channel_id;
+    //     $this->channel_name = $channel_name;
+    //     $this->timestamp = $timestamp;
+    //     $this->user_id = $user_id;
+    //     $this->user_name = $user_name;
+    //     $this->text = $text;
+    //     $this->trigger_word = $trigger_word;
+    //     $this->event_type = "message";
+    // }
+
+
 
     public function getEventType() {return $this->event_type;}
     public function getToken() {return $this->token;}
@@ -223,7 +259,7 @@ class SlackMessage implements JsonSerializable {
     public function send() {
         logger(json_encode($this->contents));
         global $SLACKBOT_URL;
-        $curl = curl_init($this->contents);
+        $curl = curl_init($SLACKBOT_URL);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($this->contents));
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
