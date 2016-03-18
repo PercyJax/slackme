@@ -18,5 +18,5 @@ function gmImageService($url) {
 
     $postfields = array('file'=>base64_encode($raw));
 
-    return sendPostJson($gmISURL, $postfields)->payload->url;
+    return sendPostJson($gmISURL, json_encode($postfields))->payload->url;
 }
