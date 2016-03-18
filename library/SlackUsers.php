@@ -9,7 +9,7 @@ class SlackUsers {
     }
     public static function getInfo($id) {
         $input['user'] = $id;
-        return callSlackAPI('users.info', $input);
+        return callSlackAPI('users.info', $input, 'test');
     }
     public static function getField($id, $field) {
         return self::getInfo($id)->{$field};
