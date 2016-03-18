@@ -20,11 +20,11 @@ function logger($text) {
     return $text;
 }
 
-function sendPostJson($url, $post_fields_json_str) {
+function sendPostJson($url, $post_fields_json_str, $content_type = "application/json") {
     $curl = curl_init($url);
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, logger($post_fields_json_str));
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: " . $content_type));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     logger(json_decode($result = logger(curl_exec($curl))));
     logger(json_encode(curl_getinfo($curl)));

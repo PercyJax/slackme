@@ -9,3 +9,4 @@ require_once $LIBRARY_DIR.'/SlackMessage.php';
 require_once $LIBRARY_DIR.'/SlackAttachment.php';
 require_once $LIBRARY_DIR.'/array_column.php';
 require_once $LIBRARY_DIR.'/SlackUsers.php';
+include_once ROOT_DIR.'/groupme_config.php';

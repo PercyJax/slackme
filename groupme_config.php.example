@@ -1,0 +1,3 @@
+<?php
+// GroupMe Config - groupme_config.php
+$AUTH_TOKEN = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
