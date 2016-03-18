@@ -268,10 +268,12 @@ class SlackMessage implements JsonSerializable {
 
     public function addAttachment($attachment) {
         $this->attachments[] = $attachment;
+        logger(json_encode($attachment));
     }
 
     public function send() {
         global $SLACKBOT_URL;
+        logger("Attachments: " . json_encode($this->contents["attachments"]));
         sendPostJson($SLACKBOT_URL, logger(json_encode($this->contents)));
     //     $curl = curl_init($SLACKBOT_URL);
     //     curl_setopt($curl, CURLOPT_POST, true);
