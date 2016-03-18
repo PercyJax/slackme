@@ -15,7 +15,9 @@ function logger($text) {
     global $DEBUG, $LOGFILE;
     if ($DEBUG == 1) {
         // file_put_contents($LOGFILE, $text."\n", FILE_APPEND);
+        file_put_contents($LOGFILE, "\n", FILE_APPEND);
         file_put_contents($LOGFILE, (gettype($text) == 'string' ? $text : json_encode($text))."\n", FILE_APPEND);
+        file_put_contents($LOGFILE, "\n", FILE_APPEND);
     }
     return $text;
 }
