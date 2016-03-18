@@ -2,7 +2,7 @@
 // Includes
 
 require_once $LIBRARY_DIR.'/common_functions.php';
-require_once $LIBRARY_DIR.'/groupme_functions.php';
+include_once $LIBRARY_DIR.'/groupme_functions.php';
 require_once $LIBRARY_DIR.'/slack_functions.php';
 require_once $LIBRARY_DIR.'/SlackEvent.php';
 require_once $LIBRARY_DIR.'/SlackMessage.php';
