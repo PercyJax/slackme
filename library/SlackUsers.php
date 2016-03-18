@@ -18,13 +18,13 @@ class SlackUsers {
         return self::getField($id, 'real_name');
     }
     public static function getFirstName($id) {
-        return (self::getField($id, 'profile'))['first_name'];
+        return (self::getField($id, 'profile'))->first_name;
     }
     public static function getLastName($id) {
-        return (self::getField($id, 'profile'))['last_name'];
+        return (self::getField($id, 'profile'))->last_name;
     }
     public static function getPic($id) {
-        return (self::getField($id, 'profile'))['image_original'];
+        return (self::getField($id, 'profile'))->image_original;
     }
     public static function isBot($id) {
         return self::getField($id, 'is_bot');
