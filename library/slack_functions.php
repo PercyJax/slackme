@@ -64,11 +64,11 @@ function sendPostJson($url, $post_fields_json_str) {
 ////////////////////////////////////////////////////////////////////////////////
 
 class SlackEvent {
-    public function isValid() {
-        global $VERIFICATION_TOKEN;
-        return $VERIFICATION_TOKEN === $this->token;
-    }
-    public function isValid($token) {
+    // public function isValid() {
+    //     global $VERIFICATION_TOKEN;
+    //     return $VERIFICATION_TOKEN === $this->token;
+    // }
+    public function isValid($token = $GLOBALS['VERIFICATION_TOKEN']) {
         return $token === $this->token;
     }
 
@@ -217,28 +217,29 @@ class SlackMessage implements JsonSerializable {
         return $this->contents;
     }
 
-    function __construct() {
-        $this->contents["username"] = "SlackBot";
-        $this->contents["icon_url"] = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png"
-        $this->contents["attachments"] = array();
-    }
+    // function __construct() {
+    //     $this->contents["username"] = "SlackBot";
+    //     $this->contents["icon_url"] = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png"
+    //     $this->contents["attachments"] = array();
+    // }
 
-    function __construct($message) {
-        $this->contents["username"] = "SlackBot";
-        $this->contents["icon_url"] = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png"
-        $this->contents["attachments"] = array();
-        $this->contents["text"] = $message;
-    }
+    // function __construct($message) {
+    //     $this->contents["username"] = "SlackBot";
+    //     $this->contents["icon_url"] = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png"
+    //     $this->contents["attachments"] = array();
+    //     $this->contents["text"] = $message;
+    // }
 
-    function __construct($message, $username) {
+    // function __construct($message, $username) {
+    //     $this->contents["username"] = $username;
+    //     $this->contents["icon_url"] = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png"
+    //     $this->contents["attachments"] = array();
+    //     $this->contents["text"] = $message;
+    // }
+
+    function __construct($message = "", $channel = '#test', $username = 'SlackBot', $icon_url = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png") {
         $this->contents["username"] = $username;
-        $this->contents["icon_url"] = "https://blog.agilebits.com/wp-content/uploads/2014/09/Slack-icon.png"
-        $this->contents["attachments"] = array();
-        $this->contents["text"] = $message;
-    }
-
-    function __construct($message, $username, $icon_url) {
-        $this->contents["username"] = $username;
+        $this->contents["channel"] = $channel;
         $this->contents["icon_url"] = $icon_url;
         $this->contents["attachments"] = array();
         $this->contents["text"] = $message;
