@@ -91,7 +91,9 @@ class SlackEvent {
                 $this->bot_name = $_POST["bot_name"];
             }
             $this->timestamp = $_POST["timestamp"];
-            $this->trigger_word = $_POST["trigger_word"];
+            if (isset($_POST['trigger_word'])) {
+                $this->trigger_word = $_POST["trigger_word"];
+            }
         } else {
             return null;
         }
