@@ -28,6 +28,7 @@ function sendPostJson($url, $post_fields_json_str) {
     curl_setopt($curl, CURLOPT_POST, true);
     curl_setopt($curl, CURLOPT_POSTFIELDS, logger($post_fields_json_str));
     curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     logger(json_decode($result = logger(curl_exec($curl))));
     curl_close($curl);
     return $result;
