@@ -5,11 +5,11 @@ require_once $LIBRARY_DIR.'/array_column.php';
 
 class SlackUsers {
     public static function getList() {
-        return callSlackAPI('users.list');
+        return callSlackAPI('users.list')->members;
     }
     public static function getInfo($id) {
         $input['user'] = $id;
-        return callSlackAPI('users.info', $input);
+        return callSlackAPI('users.info', $input)->user;
     }
     public static function getField($id, $field) {
         return self::getInfo($id)->{$field};
