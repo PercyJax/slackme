@@ -267,7 +267,7 @@ class SlackMessage implements JsonSerializable {
     }
 
     public function addAttachment($attachment) {
-        $this->attachments[] = $attachment;
+        $this->attachments[] = (object)$attachment;
         logger(json_encode($attachment));
     }
 
