@@ -22,7 +22,7 @@ function gmImageService($url) {
 
     unlink($temp);
 
-    return json_decode($response)->payload->url;
+    return json_decode($response)->payload->picture_url;
 
 
     // fwrite($temp, file_get_contents($url));
