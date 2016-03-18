@@ -68,7 +68,10 @@ class SlackEvent {
     //     global $VERIFICATION_TOKEN;
     //     return $VERIFICATION_TOKEN === $this->token;
     // }
-    public function isValid($token = $GLOBALS['VERIFICATION_TOKEN']) {
+    public function isValid($token = null) {
+        if (is_null($token)) {
+            $token = $GLOBALS['VERIFICATION_TOKEN'];
+        }
         return $token === $this->token;
     }
 
