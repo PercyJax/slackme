@@ -34,13 +34,13 @@ function sendPostJson($url, $post_fields_json_str, $content_type = "application/
     return $result;
 }
 
-function curlGrabRawBinary($url) {
-    // $ch = curl_init($url);
-    // curl_setopt($ch, CURLOPT_HEADER, 0);
-    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    // curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
-    // $raw = curl_exec($ch);
-    // curl_close($ch);
-    $raw = file_get_contents($url);
-    return $raw;
-}
+// function curlGrabRawBinary($url) {
+//     // $ch = curl_init($url);
+//     // curl_setopt($ch, CURLOPT_HEADER, 0);
+//     // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//     // curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
+//     // $raw = curl_exec($ch);
+//     // curl_close($ch);
+//     $raw = file_get_contents($url);
+//     return $raw;
+// }
