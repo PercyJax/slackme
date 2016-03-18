@@ -37,8 +37,10 @@ class SlackEvent {
     public function isValid($token = null) {
         if (is_null($token)) {
             $token = $GLOBALS['VERIFICATION_TOKEN'];
+        } else {
+            $token = array($token);
         }
-        return logger($token === $this->token);
+        return logger(in_array($token, $this->token));
     }
 
     public function isBot($bot_id = null) {

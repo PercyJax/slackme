@@ -5,7 +5,7 @@ define('ROOT_DIR', dirname(__FILE__));
 
 $DEBUG = 1;
 $LOGFILE = "logger.txt";
-$VERIFICATION_TOKEN = "XXXXXXXXXXXXXXXXXXX";
+$VERIFICATION_TOKEN = array("XXXXXXXXXXXXXXXXXXX", "YYYYYYYYYYYY");
 $API_TOKEN = "xxxx-xxxxxxxxx-xxxx";
 $SLACKBOT_URL = 'https://hooks.slack.com/services/XXXXXXXXX/XXXXXXXXX/XXXXXXXXXXXXXXXXXXX';
 $LIBRARY_DIR = ROOT_DIR.'/library';
