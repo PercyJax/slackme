@@ -38,5 +38,5 @@ function sendPostJson($url, $post_fields_json_str) {
 
 function callSlackAPI($api, $input_obj = array(), $token = null) {
     $input_obj['token'] = (is_null($token) ? $GLOBALS['API_TOKEN'] : $token);
-    return json_decode(logger(sendPostJson("https://slack.com/api/".$api.'?token='.(is_null($token) ? $GLOBALS['API_TOKEN'] : $token), logger(json_encode($input_obj)))));
+    return json_decode(logger(sendPostJson("https://slack.com/api/".$api.http_build_query($input_obj), logger(json_encode($input_obj)))));
 }
