@@ -11,6 +11,7 @@ class SlackAttachment implements JsonSerializable {
 
     function __construct() {
         $this->contents["fields"] = array();
+        $this->contents['mrkdwn_in'] = array();
     }
     
     public function setColor($hex_color_str) {$this->contents["color"] = $hex_color_str;}
@@ -37,9 +38,15 @@ class SlackAttachment implements JsonSerializable {
     public function getThumbURL() {return $this->contents["thumb_url"];}
     public function setFields($fields) {$this->contents["fields"] = $fields;}
     public function getFields() {return $this->contents["fields"];}
+    public function setMarkdowns($markdowns) {$this->contents["mrkdwn_in"];}
+    public function getMarkdowns() {return $this->contents["mrkdwn_in"];}
 
     public function addField($title = "", $value = "", $short = false) {
         $this->contents["fields"][] = (object)array("title"=>$title, "value"=>$value, "short"=>$short);
     }
+    public function addMarkdown($field) {
+        $this->contents["mrkdwn_in"][] = $field;
+    }
+
 }
 
