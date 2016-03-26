@@ -24,7 +24,7 @@ class SlackUsers {
         return self::getField($id, 'profile')->last_name;
     }
     public static function getPic($id) {
-        return self::getField($id, 'profile')->image_48;
+        return self::getField($id, 'profile')->image_original;
     }
     public static function isBot($id) {
         return self::getField($id, 'is_bot');
